@@ -2,6 +2,7 @@
 import Component from "@glimmer/component";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { service } from "@ember/service";
+import icon from "discourse/helpers/d-icon";
 
 class CustomPostDisplay extends Component {
   @service siteSettings;
@@ -51,12 +52,12 @@ class CustomPostDisplay extends Component {
                   href="/badges/{{badge.id}}/{{badge.slug}}"
                   title={{badge.name}}
                 >
-                  {{d-icon badge.icon}}
+                  {{icon badge.icon}}
                 </a>
               </span>
             {{/each}}
 
-            {{d-icon "calendar-days" class="cpd-join-date-icon" title="Join Date"}}
+            {{icon "calendar-days" class="cpd-join-date-icon" title="Join Date"}}
             <span
               class="cpd-text cpd-join-label"
               title="Join Date"
@@ -70,7 +71,7 @@ class CustomPostDisplay extends Component {
               {{this.joinDate}}
             </span>
 
-            {{d-icon "pen-to-square" class="cpd-post-count-icon" title="Posts Written"}}
+            {{icon "pen-to-square" class="cpd-post-count-icon" title="Posts Written"}}
             <span
               class="cpd-text cpd-post-count"
               title="Posts Written"
@@ -78,7 +79,7 @@ class CustomPostDisplay extends Component {
               {{this.postCount}}
             </span>
 
-            {{d-icon "thumbs-up" class="cpd-likes-received-icon" title="Likes Received"}}
+            {{icon "thumbs-up" class="cpd-likes-received-icon" title="Likes Received"}}
             <span
               class="cpd-text cpd-likes-received"
               title="Likes Received"
@@ -97,12 +98,12 @@ class CustomPostDisplay extends Component {
                 href="/badges/{{badge.id}}/{{badge.slug}}"
                 title={{badge.name}}
               >
-                {{d-icon badge.icon}}
+                {{icon badge.icon}}
               </a>
             </span>
           {{/each}}
 
-          {{d-icon "calendar-days" class="cpd-join-date-icon" title="Join Date"}}
+          {{icon "calendar-days" class="cpd-join-date-icon" title="Join Date"}}
           <span
             class="cpd-text cpd-join-label"
             title="Join Date"
@@ -116,7 +117,7 @@ class CustomPostDisplay extends Component {
             {{this.joinDate}}
           </span>
 
-          {{d-icon "pen-to-square" class="cpd-post-count-icon" title="Posts Written"}}
+          {{icon "pen-to-square" class="cpd-post-count-icon" title="Posts Written"}}
           <span
             class="cpd-text cpd-post-count"
             title="Posts Written"
@@ -124,7 +125,7 @@ class CustomPostDisplay extends Component {
             {{this.postCount}}
           </span>
 
-          {{d-icon "thumbs-up" class="cpd-likes-received-icon" title="Likes Received"}}
+          {{icon "thumbs-up" class="cpd-likes-received-icon" title="Likes Received"}}
           <span
             class="cpd-text cpd-likes-received"
             title="Likes Received"
