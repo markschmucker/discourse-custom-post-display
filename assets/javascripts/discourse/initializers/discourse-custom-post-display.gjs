@@ -4,19 +4,12 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 import { service } from "@ember/service";
 import DIcon from "discourse/components/d-icon";
 
-
 class CustomPostDisplay extends Component {
   @service siteSettings;
 
-  // Only render if we actually have a post and user
   static shouldRender(args) {
     const post = args.post;
-    if (!post || !post.user) {
-      return false;
-    }
-
-    // You can tighten this if you only want to show when data is present
-    return true;
+    return !!(post && post.user);
   }
 
   get post() {
@@ -28,8 +21,6 @@ class CustomPostDisplay extends Component {
   }
 
   get joinDate() {
-    // Already formatted by the serializer according to
-    // custom_post_display_join_format
     return this.post?.user_join_date;
   }
 
@@ -53,15 +44,12 @@ class CustomPostDisplay extends Component {
           title="Join Date, Posts Written, Likes Received"
         >
           <span class="cpd-span">
-            {{! Badges }}
             {{#each this.userBadges as |badge|}}
               <span
-                class={{concat
-                  "cpd-badge cpd-badge-" badge.id " cpd-badge-" badge.slug
-                }}
+                class="cpd-badge cpd-badge-{{badge.id}} cpd-badge-{{badge.slug}}"
               >
                 <a
-                  href={{concat "/badges/" badge.id "/" badge.slug}}
+                  href="/badges/{{badge.id}}/{{badge.slug}}"
                   title={{badge.name}}
                 >
                   <DIcon @icon={{badge.icon}} />
@@ -69,7 +57,6 @@ class CustomPostDisplay extends Component {
               </span>
             {{/each}}
 
-            {{! Join date }}
             <DIcon
               @icon="calendar-days"
               class="cpd-join-date-icon"
@@ -88,7 +75,6 @@ class CustomPostDisplay extends Component {
               {{this.joinDate}}
             </span>
 
-            {{! Post count }}
             <DIcon
               @icon="pen-to-square"
               class="cpd-post-count-icon"
@@ -101,7 +87,6 @@ class CustomPostDisplay extends Component {
               {{this.postCount}}
             </span>
 
-            {{! Likes received }}
             <DIcon
               @icon="thumbs-up"
               class="cpd-likes-received-icon"
@@ -116,16 +101,13 @@ class CustomPostDisplay extends Component {
           </span>
         </a>
       {{else}}
-        {{! Fallback if help URL is not set }}
         <span class="cpd-span">
           {{#each this.userBadges as |badge|}}
             <span
-              class={{concat
-                "cpd-badge cpd-badge-" badge.id " cpd-badge-" badge.slug
-              }}
+              class="cpd-badge cpd-badge-{{badge.id}} cpd-badge-{{badge.slug}}"
             >
               <a
-                href={{concat "/badges/" badge.id "/" badge.slug}}
+                href="/badges/{{badge.id}}/{{badge.slug}}"
                 title={{badge.name}}
               >
                 <DIcon @icon={{badge.icon}} />
@@ -184,8 +166,7 @@ export default {
   name: "discourse-custom-post-display-plugin",
 
   initialize() {
-    withPluginApi("3.5.0", (api) => {
-      // Replacement for includePostAttributes
+    withPluginApi("1.26.0", (api) => {
       api.addTrackedPostProperties(
         "user_post_count",
         "user_likes_received",
@@ -193,7 +174,6 @@ export default {
         "user_badges"
       );
 
-      // Replacement for decorateWidget("poster-name:after", ...)
       api.renderAfterWrapperOutlet(
         "post-meta-data-poster-name",
         CustomPostDisplay
