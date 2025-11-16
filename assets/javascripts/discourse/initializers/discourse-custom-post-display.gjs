@@ -2,6 +2,8 @@
 import Component from "@glimmer/component";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { service } from "@ember/service";
+import DIcon from "discourse/components/d-icon";
+
 
 class CustomPostDisplay extends Component {
   @service siteSettings;
